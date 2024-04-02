@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/layout";
 
 export default function TeacherProfile() {
-    const token = localStorage.getItem("token");
+    const authContext = useAuth();
+    const router = useRouter();
 
     useEffect(() => {
-        document.title = "InterED Hub | Teacher Profile";
+        document.title = "InterEd Hub | Teacher Profile";
         const metaDescription = document.querySelector(
             'meta[name="description"]'
         );
@@ -15,19 +18,15 @@ export default function TeacherProfile() {
             metaDescription.content =
                 "An online school management system. This is the teacher profile page.";
         }
-    }, []);
 
-    if (!token) {
-        return (
-            <div>
-                <h1>Unauthorized</h1>
-                <p>You must be logged in to view this page.</p>
-            </div>
-        );
-    }
+        if (!authContext.isLoggedIn) {
+            router.push("/");
+        }
+    }, [router, authContext.isLoggedIn]);
 
     try {
-        const parsedToken = JSON.parse(token);
+        const token = localStorage.getItem("token");
+        const parsedToken = token ? JSON.parse(token) : null;
         const {
             username,
             profile_pic,
@@ -38,7 +37,7 @@ export default function TeacherProfile() {
             designation,
             department,
             phone,
-        } = parsedToken;
+        } = parsedToken || {};
 
         return (
             <div className="bg-gray-100 min-h-screen py-12">
@@ -122,12 +121,8 @@ export default function TeacherProfile() {
                                 />
                             </figure>
                             <div className="card-body">
-                                <h2 className="card-title">
-                                    Title
-                                </h2>
-                                <p>
-                                    description
-                                </p>
+                                <h2 className="card-title">Title</h2>
+                                <p>description</p>
                                 <div className="card-actions justify-end">
                                     <button className="btn btn-primary">
                                         Edit
@@ -143,8 +138,8 @@ export default function TeacherProfile() {
         console.error("Error parsing the token:", error);
         return (
             <div>
-                <h1>Error</h1>
-                <p>There was an error processing your authentication token.</p>
+                <h1 className="text-xl font-bold text-red-600">Error!</h1>
+                <p>You have to login to view this page.</p>
             </div>
         );
     }

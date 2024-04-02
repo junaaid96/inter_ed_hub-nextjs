@@ -2,22 +2,25 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchTerm, useAuth } from "../layout";
+import { useSearchTerm, useAuth } from "@/app/layout";
+import { useRouter } from "next/navigation";
 
 export default function NavBar() {
     const searchTermContext = useSearchTerm();
     const authContext = useAuth();
+    const router = useRouter();
 
     async function handleLogout() {
         localStorage.removeItem("token");
         localStorage.removeItem("password");
         authContext.setIsLoggedIn(false);
+        router.push("/");
     }
 
     const token = localStorage.getItem("token");
     const parsedToken = token ? JSON.parse(token) : null;
 
-    const { first_name, last_name, profile_pic } = parsedToken || {};
+    const { first_name, last_name, profile_pic, user_type } = parsedToken || {};
 
     return (
         <div className="navbar bg-base-200 rounded-md">
@@ -92,10 +95,11 @@ export default function NavBar() {
                         </div>
                     </ul>
                 </div>
+
                 <Link className="btn btn-ghost shadow max-sm:hidden" href="/">
                     Home
                 </Link>
-                {authContext.isLoggedIn && (
+                {authContext.isLoggedIn && user_type === "Teacher" && (
                     <>
                         <Link
                             className="btn btn-ghost shadow"
@@ -124,7 +128,7 @@ export default function NavBar() {
                             >
                                 <li className="pointer-events-none">
                                     <p className="font-bold">
-                                        {first_name} {last_name}
+                                        {first_name} {last_name} ({user_type})
                                     </p>
                                 </li>
                                 <li>
@@ -141,12 +145,58 @@ export default function NavBar() {
                 )}
                 {!authContext.isLoggedIn && (
                     <>
-                        <Link className="btn btn-ghost shadow" href="/login">
-                            Login
-                        </Link>
-                        <Link className="btn btn-ghost shadow" href="/register">
-                            Register
-                        </Link>
+                        <div className="dropdown dropdown-hover dropdown-end">
+                            <div tabIndex={0} role="button" className="btn m-1">
+                                Login
+                            </div>
+                            <ul
+                                tabIndex={0}
+                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                            >
+                                <li>
+                                    <Link
+                                        className="btn btn-ghost shadow"
+                                        href="/teacher/login"
+                                    >
+                                        Teacher Login
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="btn btn-ghost shadow"
+                                        href="/teacher/login"
+                                    >
+                                        Student Login
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="dropdown dropdown-hover dropdown-end">
+                            <div tabIndex={0} role="button" className="btn m-1">
+                                Registration
+                            </div>
+                            <ul
+                                tabIndex={0}
+                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                            >
+                                <li>
+                                    <Link
+                                        className="btn btn-ghost shadow"
+                                        href="/teacher/register"
+                                    >
+                                        Teacher Registration
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="btn btn-ghost shadow"
+                                        href="/teacher/register"
+                                    >
+                                        Student Registration
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </>
                 )}
             </div>

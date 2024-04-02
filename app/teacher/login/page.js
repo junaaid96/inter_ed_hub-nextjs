@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useAuth } from "../layout";
+import { useAuth } from "@/app/layout";
 
 export default function Login() {
     const router = useRouter();
@@ -12,17 +12,17 @@ export default function Login() {
     const authContext = useAuth();
 
     useEffect(() => {
-        document.title = "InterED Hub | Login";
+        document.title = "InterEd Hub | Teacher Login";
         const metaDescription = document.querySelector(
             'meta[name="description"]'
         );
         if (metaDescription) {
             metaDescription.content =
-                "An online school management system. This is the login page.";
+                "An online school management system. This is the teacher login page.";
         }
-        
+
         if (authContext.isLoggedIn) {
-            router.push("/teacher/profile");
+            router.push("/");
         }
     }, [router, authContext.isLoggedIn]);
 
@@ -46,7 +46,7 @@ export default function Login() {
 
             localStorage.setItem("token", JSON.stringify(response.data.token));
 
-            router.push("/teacher/profile");
+            router.push("/");
 
             authContext.setIsLoggedIn(true);
         } catch (error) {
@@ -102,13 +102,13 @@ export default function Login() {
                                 <span>{error}</span>
                             </div>
                         ))}
-                    <h1 className="text-5xl font-bold">Login now!</h1>
+                    <h1 className="text-5xl font-bold">Teacher Login</h1>
                     <p className="py-6">
                         Welcome back! Please enter your credentials to access
                         your account.
                     </p>
                 </div>
-                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                <div className="card flex-shrink-0 w-full shadow-2xl bg-base-100">
                     <form className="card-body" onSubmit={handleLogin}>
                         <div className="form-control">
                             <label className="label" htmlFor="username">
@@ -153,6 +153,10 @@ export default function Login() {
                         </div>
                     </form>
                 </div>
+                <Link href="/teacher/register" className="font-bold">
+                    Don't have an account? Please{" "}
+                    <span className="text-primary">Register</span>
+                </Link>
             </div>
         </div>
     );

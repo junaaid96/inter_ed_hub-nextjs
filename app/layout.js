@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
     const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        document.title = "InterED Hub";
+        document.title = "InterEd Hub";
         const metaDescription = document.querySelector(
             'meta[name="description"]'
         );

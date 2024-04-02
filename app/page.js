@@ -7,12 +7,43 @@ import Link from "next/link";
 import Carousel from "./components/Carousel";
 import Hero from "./components/Hero";
 import { useSearchTerm } from "./layout";
+import getAllDepartments from "@/lib/getAllDepartments";
 
 export default function Home() {
-    const searchTermContext  = useSearchTerm()
+    const searchTermContext = useSearchTerm();
     const [courses, setCourses] = useState({ count: 0, results: [] });
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
+    const [departments, setDepartments] = useState([]);
+
+    useEffect(() => {
+        async function fetchDepartments() {
+            try {
+                const data = await getAllDepartments();
+                setDepartments(data);
+            } catch (error) {
+                console.error("Error fetching departments:", error);
+            }
+        }
+        fetchDepartments();
+    }, []);
+
+    const filterCourse = async (departmentSlug) => {
+        try {
+            const response = await axios.get(
+                `https://inter-ed-hub-drf.onrender.com/courses/?department=${departmentSlug}`,
+                {
+                    params: {
+                        page_size: currentPage,
+                    },
+                }
+            );
+            setCourses(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching courses:", error);
+        }
+    };
 
     useEffect(() => {
         async function fetchCourses() {
@@ -45,8 +76,24 @@ export default function Home() {
             <Hero />
 
             {/* All Courses */}
-            <h2 className="mt-6 text-2xl font-bold">Available Courses</h2>
-            <p className="mt-2">Total Courses Found: {courses.count}</p>
+            <h2 className="mt-6 mb-3 text-2xl font-bold">Available Courses</h2>
+            {/* Filter Course by Department */}
+            <button
+                className="btn btn-sm btn-outline btn-rounded mt-2 mr-2"
+                onClick={() => filterCourse("")}
+            >
+                All
+            </button>
+            {departments.map((department) => (
+                <button
+                    key={department.id}
+                    className="btn btn-sm btn-outline btn-rounded mt-2 mr-2"
+                    onClick={() => filterCourse(department.slug)}
+                >
+                    {department.name}
+                </button>
+            ))}
+            <p className="mt-5">Total Courses Found: {courses.count}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
                 {loading ? (
@@ -99,7 +146,7 @@ export default function Home() {
             </div>
 
             {/* All Teachers */}
-            <h2 className="mt-10 text-2xl font-bold">Available Teachers</h2>
+            <h2 className="mt-10 text-2xl font-bold">Meet our Teachers</h2>
             <p>
                 "Meet the guiding light of our digital classroom journey - the
                 teacher of our online school management system, seamlessly
