@@ -82,7 +82,7 @@ export default function Home() {
                 className="btn btn-sm btn-outline btn-rounded mt-2 mr-2"
                 onClick={() => filterCourse("")}
             >
-                All
+                All Departments
             </button>
             {departments.map((department) => (
                 <button

@@ -80,7 +80,6 @@ export default function Register() {
             setSuccess(
                 "Registration successful. Please activate your account before login!"
             );
-
         } catch (error) {
             setError(error.response.data.message);
             console.error("Registration failed:", error);
@@ -109,6 +108,24 @@ export default function Register() {
                             <span>{error}</span>
                         </div>
                     )}
+                    {success && (
+                        <div role="alert" className="alert alert-success">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="stroke-current shrink-0 h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            <span>{success}</span>
+                        </div>
+                    )}
                     <h1 className="text-5xl font-bold">Teacher Register</h1>
                     <p className="py-6">
                         Welcome! Please fill in the following details to create
@@ -126,7 +143,7 @@ export default function Register() {
                                 id="username"
                                 name="username"
                                 placeholder="Username"
-                                className="input input-bordered"
+                                className="input input-bordered input-primary"
                                 required
                                 aria-label="Username"
                             />
@@ -143,7 +160,7 @@ export default function Register() {
                                     id="first_name"
                                     name="first_name"
                                     placeholder="First Name"
-                                    className="input input-bordered"
+                                    className="input input-bordered input-primary"
                                     required
                                     aria-label="First Name"
                                 />
@@ -159,7 +176,7 @@ export default function Register() {
                                     id="last_name"
                                     name="last_name"
                                     placeholder="Last Name"
-                                    className="input input-bordered"
+                                    className="input input-bordered input-primary"
                                     required
                                     aria-label="Last Name"
                                 />
@@ -175,7 +192,7 @@ export default function Register() {
                                     id="email"
                                     name="email"
                                     placeholder="Email"
-                                    className="input input-bordered"
+                                    className="input input-bordered input-primary"
                                     required
                                     aria-label="Email"
                                 />
@@ -189,7 +206,7 @@ export default function Register() {
                                     id="phone"
                                     name="phone"
                                     placeholder="Phone"
-                                    className="input input-bordered"
+                                    className="input input-bordered input-primary"
                                     required
                                     aria-label="Phone"
                                 />
@@ -205,7 +222,7 @@ export default function Register() {
                                     id="password"
                                     name="password"
                                     placeholder="Password"
-                                    className="input input-bordered"
+                                    className="input input-bordered input-primary"
                                     required
                                     aria-label="Password"
                                 />
@@ -224,7 +241,7 @@ export default function Register() {
                                     id="confirm_password"
                                     name="confirm_password"
                                     placeholder="Confirm Password"
-                                    className="input input-bordered"
+                                    className="input input-bordered input-primary"
                                     required
                                     aria-label="Confirm Password"
                                 />
@@ -240,7 +257,7 @@ export default function Register() {
                                 type="file"
                                 id="profile_pic"
                                 name="profile_pic"
-                                className="input input-bordered"
+                                className="input input-bordered input-primary"
                                 required
                                 aria-label="Profile Picture"
                             />
@@ -253,7 +270,7 @@ export default function Register() {
                                 id="bio"
                                 name="bio"
                                 placeholder="Bio"
-                                className="textarea textarea-bordered"
+                                className="textarea textarea-bordered textarea-primary"
                                 required
                                 aria-label="Bio"
                             ></textarea>
@@ -270,7 +287,7 @@ export default function Register() {
                                     id="designation"
                                     name="designation"
                                     placeholder="Designation"
-                                    className="input input-bordered"
+                                    className="input input-bordered input-primary"
                                     required
                                     aria-label="Designation"
                                 />

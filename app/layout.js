@@ -5,6 +5,7 @@ import "./globals.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { createContext, useState, useEffect, useContext } from "react";
+import getTeacher from "@/lib/getTeacher";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,18 @@ const SearchTermContext = createContext();
 export default function RootLayout({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [userData, setUserData] = useState({
+        username: "",
+        email: "",
+        first_name: "",
+        last_name: "",
+        profile_pic: null,
+        bio: "",
+        designation: "",
+        department: "",
+        contact: "",
+    });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         document.title = "InterEd Hub";
@@ -30,11 +43,17 @@ export default function RootLayout({ children }) {
         }
 
         const token = localStorage.getItem("token");
-        setIsLoggedIn(!!token); // !! converts to boolean
+        const parsedToken = token ? JSON.parse(token) : null;
+        setIsLoggedIn(!!parsedToken); // !! converts to boolean
+
+        getTeacher(parsedToken.teacher_id).then((data) => {
+            setUserData(data);
+            setLoading(false);
+        });
     }, []);
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+        <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, userData, loading }}>
             <SearchTermContext.Provider value={{ searchTerm, setSearchTerm }}>
                 <html lang="en" data-theme="emerald">
                     <body className={inter.className}>

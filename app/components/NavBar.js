@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchTerm, useAuth } from "@/app/layout";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function NavBar() {
     const searchTermContext = useSearchTerm();
@@ -16,11 +17,6 @@ export default function NavBar() {
         authContext.setIsLoggedIn(false);
         router.push("/");
     }
-
-    const token = localStorage.getItem("token");
-    const parsedToken = token ? JSON.parse(token) : null;
-
-    const { first_name, last_name, profile_pic, user_type } = parsedToken || {};
 
     return (
         <div className="navbar bg-base-200 rounded-md">
@@ -99,50 +95,57 @@ export default function NavBar() {
                 <Link className="btn btn-ghost shadow max-sm:hidden" href="/">
                     Home
                 </Link>
-                {authContext.isLoggedIn && user_type === "Teacher" && (
-                    <>
-                        <Link
-                            className="btn btn-ghost shadow"
-                            href="/course/create"
-                        >
-                            Create Course
-                        </Link>
-                        <div className="dropdown dropdown-end">
-                            <div
-                                tabIndex={0}
-                                role="button"
-                                className="btn btn-ghost btn-circle avatar"
+                {authContext.isLoggedIn &&
+                    authContext.userData.user_type === "Teacher" && (
+                        <>
+                            <Link
+                                className="btn btn-ghost shadow"
+                                href="/course/create"
                             >
-                                <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                    <Image
-                                        alt="Profile Picture"
-                                        src={profile_pic}
-                                        width={40}
-                                        height={40}
-                                    />
+                                Create Course
+                            </Link>
+                            <div className="dropdown dropdown-end">
+                                <div
+                                    tabIndex={0}
+                                    role="button"
+                                    className="btn btn-ghost btn-circle avatar"
+                                >
+                                    <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                        <Image
+                                            alt="Profile Picture"
+                                            src={
+                                                authContext.userData.profile_pic
+                                            }
+                                            width={40}
+                                            height={40}
+                                        />
+                                    </div>
                                 </div>
+                                <ul
+                                    tabIndex={0}
+                                    className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                                >
+                                    <li className="pointer-events-none">
+                                        <p className="font-bold">
+                                            {authContext.userData.first_name}{" "}
+                                            {authContext.userData.last_name} (
+                                            {authContext.userData.user_type})
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <Link href="/teacher/profile">
+                                            Profile
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <button onClick={handleLogout}>
+                                            Logout
+                                        </button>
+                                    </li>
+                                </ul>
                             </div>
-                            <ul
-                                tabIndex={0}
-                                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-                            >
-                                <li className="pointer-events-none">
-                                    <p className="font-bold">
-                                        {first_name} {last_name} ({user_type})
-                                    </p>
-                                </li>
-                                <li>
-                                    <Link href="/teacher/profile">Profile</Link>
-                                </li>
-                                <li>
-                                    <button onClick={handleLogout}>
-                                        Logout
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </>
-                )}
+                        </>
+                    )}
                 {!authContext.isLoggedIn && (
                     <>
                         <div className="dropdown dropdown-hover dropdown-end">

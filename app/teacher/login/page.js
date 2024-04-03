@@ -119,7 +119,7 @@ export default function Login() {
                                 id="username"
                                 name="username"
                                 placeholder="Username"
-                                className="input input-bordered"
+                                className="input input-bordered input-primary"
                                 required
                                 aria-label="Username"
                             />
@@ -133,7 +133,7 @@ export default function Login() {
                                 id="password"
                                 name="password"
                                 placeholder="Password"
-                                className="input input-bordered"
+                                className="input input-bordered input-primary"
                                 required
                                 aria-label="Password"
                             />
