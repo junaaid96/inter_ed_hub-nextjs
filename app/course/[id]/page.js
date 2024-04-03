@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export async function generateMetadata({ params }) {
     const { id } = params;
-    const course = await getCourse({ id });
+    const course = await getCourse(id);
 
     return {
         title: "Course | " + course.title,
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
 
 export default async function CourseDetails({ params }) {
     const { id } = params;
-    const course = await getCourse({ id });
+    const course = await getCourse(id);
 
     return (
         <div className="container bg-base-100 min-h-screen mx-auto mt-10 px-4">

@@ -9,7 +9,7 @@ import filterCourseByTeacher from "@/lib/filterCourseByTeacher";
 
 export default function TeacherProfile() {
     const authContext = useAuth();
-    const { userData, loading } = authContext;
+    const { isLoggedIn, userData, loading } = authContext;
     const router = useRouter();
     const [myCourses, setMyCourses] = useState([]);
     const [courseLoading, setCourseLoading] = useState(true);
@@ -24,7 +24,7 @@ export default function TeacherProfile() {
                 "An online school management system. This is the teacher profile page.";
         }
 
-        if (!authContext.isLoggedIn) {
+        if (!isLoggedIn) {
             router.push("/");
         }
 
@@ -32,7 +32,7 @@ export default function TeacherProfile() {
             setMyCourses(data.results);
             setCourseLoading(false);
         });
-    }, [router, authContext.isLoggedIn, userData]);
+    }, [router, isLoggedIn, userData]);
 
     return loading ? (
         <div className="min-h-screen w-24 m-auto">
@@ -113,46 +113,48 @@ export default function TeacherProfile() {
                 </div>
             </div>
             <div className="text-center">
-    <h1 className="text-3xl font-bold text-gray-800 my-12">
-        My Courses
-    </h1>
-    {courseLoading ? (
-        <div className="min-h-screen w-24 m-auto">
-            <span className="loading loading-infinity loading-lg"></span>
-        </div>
-    ) : myCourses.length === 0 ? (
-        <p>No courses found.</p>
-    ) : (
-        <div className="flex flex-wrap justify-center gap-6">
-            {myCourses.map((myCourse) => (
-                <div key={myCourse.id} className="flex flex-col items-center mb-4">
-                    <div className="card w-96 bg-base-100 shadow-xl">
-                        <figure>
-                            <Image
-                                src={myCourse.image}
-                                alt="Course Cover"
-                                width={384}
-                                height={216}
-                            />
-                        </figure>
-                        <div className="card-body">
-                            <h2 className="card-title">
-                                {myCourse.title}
-                            </h2>
-                            <p>{myCourse.description}</p>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-primary">
-                                    Edit
-                                </button>
-                            </div>
-                        </div>
+                <h1 className="text-3xl font-bold text-gray-800 my-12">
+                    My Courses
+                </h1>
+                {courseLoading ? (
+                    <div className="min-h-screen w-24 m-auto">
+                        <span className="loading loading-infinity loading-lg"></span>
                     </div>
-                </div>
-            ))}
-        </div>
-    )}
-</div>
-
+                ) : myCourses.length === 0 ? (
+                    <p>No courses found.</p>
+                ) : (
+                    <div className="flex flex-wrap justify-center gap-6">
+                        {myCourses.map((myCourse) => (
+                            <div
+                                key={myCourse.id}
+                                className="flex flex-col items-center mb-4"
+                            >
+                                <div className="card w-96 bg-base-100 shadow-xl">
+                                    <figure>
+                                        <Image
+                                            src={myCourse.image}
+                                            alt="Course Cover"
+                                            width={384}
+                                            height={216}
+                                        />
+                                    </figure>
+                                    <div className="card-body">
+                                        <h2 className="card-title">
+                                            {myCourse.title}
+                                        </h2>
+                                        <p>{myCourse.description}</p>
+                                        <div className="card-actions justify-end">
+                                            <Link href={"/course/update"} className="btn btn-primary">
+                                                Update
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

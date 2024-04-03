@@ -10,6 +10,7 @@ export default function Login() {
     const router = useRouter();
     const [error, setError] = useState("");
     const authContext = useAuth();
+    const { isLoggedIn, setIsLoggedIn } = authContext;
 
     useEffect(() => {
         document.title = "InterEd Hub | Teacher Login";
@@ -21,10 +22,10 @@ export default function Login() {
                 "An online school management system. This is the teacher login page.";
         }
 
-        if (authContext.isLoggedIn) {
+        if (isLoggedIn) {
             router.push("/");
         }
-    }, [router, authContext.isLoggedIn]);
+    }, [router, isLoggedIn]);
 
     async function handleLogin(e) {
         e.preventDefault();
@@ -48,7 +49,7 @@ export default function Login() {
 
             router.push("/");
 
-            authContext.setIsLoggedIn(true);
+            setIsLoggedIn(true);
         } catch (error) {
             setError(error.response.data.message);
             console.error("Login failed:", error);

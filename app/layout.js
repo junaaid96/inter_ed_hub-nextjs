@@ -12,11 +12,6 @@ const inter = Inter({ subsets: ["latin"] });
 const AuthContext = createContext();
 const SearchTermContext = createContext();
 
-// export const metadata = {
-//     title: "InterED Hub",
-//     description: "A online school management system.",
-// };
-
 export default function RootLayout({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -32,6 +27,7 @@ export default function RootLayout({ children }) {
         contact: "",
     });
     const [loading, setLoading] = useState(true);
+    const password = localStorage.getItem("password") || "";
 
     useEffect(() => {
         document.title = "InterEd Hub";
@@ -53,7 +49,9 @@ export default function RootLayout({ children }) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, userData, loading }}>
+        <AuthContext.Provider
+            value={{ isLoggedIn, setIsLoggedIn, userData, password, loading }}
+        >
             <SearchTermContext.Provider value={{ searchTerm, setSearchTerm }}>
                 <html lang="en" data-theme="emerald">
                     <body className={inter.className}>

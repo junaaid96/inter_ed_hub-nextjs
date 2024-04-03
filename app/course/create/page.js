@@ -10,7 +10,7 @@ export default function CreateCourse() {
     const [departments, setDepartments] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState("");
     const authContext = useAuth();
-    const { isLoggedIn, userData, loading } = authContext;
+    const { isLoggedIn, userData, loading, password } = authContext;
     const router = useRouter();
 
     useEffect(() => {
@@ -32,9 +32,6 @@ export default function CreateCourse() {
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-
-    const username = userData.username || "";
-    const password = localStorage.getItem("password") || "";
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -62,9 +59,9 @@ export default function CreateCourse() {
                         "Content-Type": "multipart/form-data",
                         Authorization:
                             "Basic " +
-                            Buffer.from(username + ":" + password).toString(
-                                "base64"
-                            ),
+                            Buffer.from(
+                                userData.username + ":" + password
+                            ).toString("base64"),
                     },
                 }
             );

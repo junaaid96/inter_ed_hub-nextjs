@@ -12,6 +12,7 @@ export default function Register() {
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const authContext = useAuth();
+    const { isLoggedIn } = authContext;
     const [departments, setDepartments] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState("");
 
@@ -25,12 +26,12 @@ export default function Register() {
                 "An online school management system. This is the teacher registration page.";
         }
 
-        if (authContext.isLoggedIn) {
+        if (isLoggedIn) {
             router.push("/");
         }
 
         getAllDepartments().then((data) => setDepartments(data));
-    }, [router, authContext.isLoggedIn]);
+    }, [router, isLoggedIn]);
 
     async function handleRegister(e) {
         e.preventDefault();
