@@ -72,8 +72,8 @@ export default function TeacherProfileUpdate() {
                     },
                 }
             );
-            setSuccess("Profile Updated Successfully!");
             window.location.reload();
+            setSuccess("Profile Updated Successfully!");
             console.log(response);
         } catch (error) {
             setError("An error occurred. Please try again later.");

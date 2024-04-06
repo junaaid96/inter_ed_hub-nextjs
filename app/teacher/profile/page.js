@@ -30,11 +30,12 @@ export default function TeacherProfile() {
 
         filterCourseByTeacher(userData.username).then((data) => {
             setMyCourses(data.results);
+            console.log(data.results);
             setCourseLoading(false);
         });
     }, [router, isLoggedIn, userData]);
 
-    return loading ? (
+    return loading || courseLoading ? (
         <div className="min-h-screen w-24 m-auto">
             <span className="loading loading-infinity loading-lg"></span>
         </div>
@@ -116,7 +117,7 @@ export default function TeacherProfile() {
                 <h1 className="text-3xl font-bold text-gray-800 my-12">
                     My Courses
                 </h1>
-                {courseLoading ? (
+                {loading || courseLoading ? (
                     <div className="min-h-screen w-24 m-auto">
                         <span className="loading loading-infinity loading-lg"></span>
                     </div>
@@ -144,7 +145,10 @@ export default function TeacherProfile() {
                                         </h2>
                                         <p>{myCourse.description}</p>
                                         <div className="card-actions justify-end">
-                                            <Link href={"/course/update"} className="btn btn-primary">
+                                            <Link
+                                                href={`/course/update/${myCourse.id}`}
+                                                className="btn btn-primary"
+                                            >
                                                 Update
                                             </Link>
                                         </div>
