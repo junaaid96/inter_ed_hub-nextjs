@@ -15,7 +15,7 @@ export default function Hero() {
                         education, empowering educators and students alike to
                         thrive in the digital age.
                     </p>
-                    <Link href={"/register"} className="btn btn-primary">Get Started</Link>
+                    <Link href={"/teacher/register"} className="btn btn-primary">Get Started</Link>
                 </div>
             </div>
         </div>

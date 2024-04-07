@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { createContext, useState, useEffect, useContext } from "react";
 import getTeacher from "@/lib/getTeacher";
+import getStudent from "@/lib/getStudent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,7 @@ const SearchTermContext = createContext();
 export default function RootLayout({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
-    const [userData, setUserData] = useState({
+    const [teacherData, setTeacherData] = useState({
         username: "",
         email: "",
         first_name: "",
@@ -24,7 +25,17 @@ export default function RootLayout({ children }) {
         bio: "",
         designation: "",
         department: "",
-        contact: "",
+        phone: "",
+    });
+    const [studentData, setStudentData] = useState({
+        username: "",
+        email: "",
+        first_name: "",
+        last_name: "",
+        profile_pic: null,
+        bio: "",
+        department: "",
+        phone: "",
     });
     const [loading, setLoading] = useState(true);
     const password = localStorage.getItem("password") || "";
@@ -42,15 +53,32 @@ export default function RootLayout({ children }) {
         const parsedToken = token ? JSON.parse(token) : null;
         setIsLoggedIn(!!parsedToken); // !! converts to boolean
 
-        getTeacher(parsedToken.teacher_id).then((data) => {
-            setUserData(data);
+        if (parsedToken && parsedToken.user_type === "Teacher") {
+            getTeacher(parsedToken.teacher_id).then((data) => {
+                setTeacherData(data);
+                setLoading(false);
+            });
+        } else if (parsedToken && parsedToken.user_type === "Student") {
+            getStudent(parsedToken.student_id).then((data) => {
+                setStudentData(data);
+                setLoading(false);
+            });
+        } else {
+            console.log("Token is not available. User needs to log in.");
             setLoading(false);
-        });
+        }
     }, []);
 
     return (
         <AuthContext.Provider
-            value={{ isLoggedIn, setIsLoggedIn, userData, password, loading }}
+            value={{
+                isLoggedIn,
+                setIsLoggedIn,
+                teacherData,
+                studentData,
+                password,
+                loading,
+            }}
         >
             <SearchTermContext.Provider value={{ searchTerm, setSearchTerm }}>
                 <html lang="en" data-theme="emerald">

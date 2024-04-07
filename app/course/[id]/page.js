@@ -1,3 +1,4 @@
+import EnrollButton from "@/app/components/EnrollButton";
 import getCourse from "@/lib/getCourse";
 import Image from "next/image";
 
@@ -43,11 +44,12 @@ export default async function CourseDetails({ params }) {
                                 <li>Teacher: {course.teacher}</li>
                                 <li>Department: {course.department}</li>
                                 <li>Credit: {course.credit}</li>
+                                <li>
+                                    Total Enrollment: {course.total_enrollment}
+                                </li>
                             </ul>
                             <div className="mt-10">
-                                <button className="btn btn-primary">
-                                    Enroll
-                                </button>
+                                <EnrollButton courseId={course.id} />
                             </div>
                         </div>
                     </div>

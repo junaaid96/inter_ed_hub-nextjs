@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export async function generateMetadata({ params }) {
     const { id } = params;
-    const teacher = await getTeacher({ id });
+    const teacher = await getTeacher(id);
 
     return {
         title: "Teacher | " + teacher.first_name + " " + teacher.last_name,
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
 
 export default async function TeacherDetails({ params }) {
     const { id } = params;
-    const teacher = await getTeacher({ id });
+    const teacher = await getTeacher(id);
 
     return (
         <div className="bg-base-100 min-h-screen py-12">

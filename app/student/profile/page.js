@@ -5,17 +5,17 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/layout";
 import Link from "next/link";
-import filterCourseByTeacher from "@/lib/filterCourseByTeacher";
+import filterCourseByStudent from "@/lib/filterCourseByStudent";
 
-export default function TeacherProfile() {
+export default function StudentProfile() {
     const authContext = useAuth();
-    const { isLoggedIn, teacherData, loading } = authContext;
+    const { isLoggedIn, studentData, loading } = authContext;
     const router = useRouter();
     const [myCourses, setMyCourses] = useState([]);
     const [courseLoading, setCourseLoading] = useState(true);
 
     useEffect(() => {
-        document.title = "InterEd Hub | Teacher Profile";
+        document.title = "InterEd Hub | Student Profile";
         const metaDescription = document.querySelector(
             'meta[name="description"]'
         );
@@ -28,12 +28,12 @@ export default function TeacherProfile() {
             router.push("/");
         }
 
-        filterCourseByTeacher(teacherData.username).then((data) => {
+        filterCourseByStudent(studentData.username).then((data) => {
             setMyCourses(data.results);
             console.log(data.results);
             setCourseLoading(false);
         });
-    }, [router, isLoggedIn, teacherData]);
+    }, [router, isLoggedIn, studentData]);
 
     return loading || courseLoading ? (
         <div className="min-h-screen w-24 m-auto">
@@ -46,8 +46,8 @@ export default function TeacherProfile() {
                     <div className="px-6 py-8 sm:flex sm:items-center sm:justify-between">
                         <div className="text-center sm:text-left sm:mb-0">
                             <h1 className="text-3xl font-bold text-gray-800 mb-2">
-                                Hello, {teacherData.first_name}{" "}
-                                {teacherData.last_name}!
+                                Hello, {studentData.first_name}{" "}
+                                {studentData.last_name}!
                             </h1>
                             <p className="text-gray-600 mb-2">
                                 This is your profile page.
@@ -57,20 +57,21 @@ export default function TeacherProfile() {
                             <div className="relative w-32 h-32 overflow-hidden">
                                 <Image
                                     fill
-                                    src={teacherData.profile_pic}
+                                    src={studentData.profile_pic}
                                     alt="Profile Image"
                                 />
                             </div>
                             <div className="ml-4">
                                 <p className="text-gray-800 font-semibold">
-                                    {teacherData.first_name} {teacherData.last_name}
+                                    {studentData.first_name}{" "}
+                                    {studentData.last_name}
                                 </p>
                                 <p className="text-gray-600">
-                                    {teacherData.email}
+                                    {studentData.email}
                                 </p>
                                 <Link
                                     className="btn btn-primary btn-sm mt-4"
-                                    href={`/teacher/profile/update`}
+                                    href={`/student/profile/update`}
                                 >
                                     Update
                                 </Link>
@@ -84,15 +85,9 @@ export default function TeacherProfile() {
                             </h2>
                             <p className="text-gray-700">
                                 <span className="font-semibold">
-                                    Designation:
-                                </span>{" "}
-                                {teacherData.designation}
-                            </p>
-                            <p className="text-gray-700">
-                                <span className="font-semibold">
                                     Department:
                                 </span>{" "}
-                                {teacherData.department}
+                                {studentData.department}
                             </p>
                         </div>
                         <div className="border-b border-gray-200 pb-4 mb-4">
@@ -101,21 +96,21 @@ export default function TeacherProfile() {
                             </h2>
                             <p className="text-gray-700">
                                 <span className="font-semibold">Phone:</span>{" "}
-                                {teacherData.phone}
+                                {studentData.phone}
                             </p>
                         </div>
                         <div>
                             <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                                About Teacher
+                                About Student
                             </h2>
-                            <p className="text-gray-700">{teacherData.bio}</p>
+                            <p className="text-gray-700">{studentData.bio}</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="text-center">
                 <h1 className="text-3xl font-bold text-gray-800 my-12">
-                    My Courses
+                    Enrolled Courses
                 </h1>
                 {loading || courseLoading ? (
                     <div className="min-h-screen w-24 m-auto">
@@ -146,10 +141,10 @@ export default function TeacherProfile() {
                                         <p>{myCourse.description}</p>
                                         <div className="card-actions justify-end">
                                             <Link
-                                                href={`/course/update/${myCourse.id}`}
+                                                href={`#`}
                                                 className="btn btn-primary"
                                             >
-                                                Update
+                                                Start
                                             </Link>
                                         </div>
                                     </div>

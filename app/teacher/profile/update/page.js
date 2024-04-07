@@ -9,7 +9,7 @@ import getAllDepartments from "@/lib/getAllDepartments";
 
 export default function TeacherProfileUpdate() {
     const authContext = useAuth();
-    const { isLoggedIn, userData, password, loading } = authContext;
+    const { isLoggedIn, teacherData, password, loading } = authContext;
     const router = useRouter();
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -67,7 +67,7 @@ export default function TeacherProfileUpdate() {
                         Authorization:
                             "Basic " +
                             Buffer.from(
-                                userData.username + ":" + password
+                                teacherData.username + ":" + password
                             ).toString("base64"),
                     },
                 }
@@ -141,13 +141,13 @@ export default function TeacherProfileUpdate() {
                                 below.
                             </p>
                             <div className="card flex-shrink-0 w-full shadow-2xl bg-base-100">
-                                {userData.profile_pic ? (
+                                {teacherData.profile_pic ? (
                                     <>
                                         <div className="avatar">
                                             <div className="w-24 m-auto mt-6 rounded">
                                                 <Image
                                                     alt="Profile Picture"
-                                                    src={userData.profile_pic}
+                                                    src={teacherData.profile_pic}
                                                     width={100}
                                                     height={100}
                                                     className="circle"
@@ -178,7 +178,7 @@ export default function TeacherProfileUpdate() {
                                             name="username"
                                             placeholder="Username"
                                             className="input input-bordered input-primary"
-                                            value={userData.username}
+                                            value={teacherData.username}
                                             disabled
                                         />
                                     </div>
@@ -199,7 +199,7 @@ export default function TeacherProfileUpdate() {
                                                 placeholder="First Name"
                                                 className="input input-bordered input-primary"
                                                 defaultValue={
-                                                    userData.first_name
+                                                    teacherData.first_name
                                                 }
                                                 required
                                             />
@@ -220,7 +220,7 @@ export default function TeacherProfileUpdate() {
                                                 placeholder="Last Name"
                                                 className="input input-bordered input-primary"
                                                 defaultValue={
-                                                    userData.last_name
+                                                    teacherData.last_name
                                                 }
                                                 required
                                             />
@@ -242,7 +242,7 @@ export default function TeacherProfileUpdate() {
                                                 name="email"
                                                 placeholder="Email"
                                                 className="input input-bordered input-primary"
-                                                value={userData.email}
+                                                value={teacherData.email}
                                                 disabled
                                             />
                                         </div>
@@ -261,7 +261,7 @@ export default function TeacherProfileUpdate() {
                                                 name="phone"
                                                 placeholder="Phone"
                                                 className="input input-bordered input-primary"
-                                                defaultValue={userData.phone}
+                                                defaultValue={teacherData.phone}
                                                 required
                                             />
                                         </div>
@@ -293,7 +293,7 @@ export default function TeacherProfileUpdate() {
                                             name="bio"
                                             placeholder="Bio"
                                             className="textarea textarea-bordered textarea-primary"
-                                            defaultValue={userData.bio}
+                                            defaultValue={teacherData.bio}
                                             required
                                         ></textarea>
                                     </div>
@@ -314,7 +314,7 @@ export default function TeacherProfileUpdate() {
                                                 placeholder="Designation"
                                                 className="input input-bordered input-primary"
                                                 defaultValue={
-                                                    userData.designation
+                                                    teacherData.designation
                                                 }
                                                 required
                                             />
@@ -333,7 +333,7 @@ export default function TeacherProfileUpdate() {
                                                 name="department"
                                                 className="select select-bordered select-primary"
                                                 defaultValue={
-                                                    userData.department
+                                                    teacherData.department
                                                 }
                                                 required
                                             >

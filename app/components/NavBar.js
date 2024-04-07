@@ -9,7 +9,7 @@ export default function NavBar() {
     const searchTermContext = useSearchTerm();
     const { searchTerm, setSearchTerm } = searchTermContext;
     const authContext = useAuth();
-    const { isLoggedIn, setIsLoggedIn, userData } = authContext;
+    const { isLoggedIn, setIsLoggedIn, teacherData, studentData } = authContext;
     const router = useRouter();
 
     async function handleLogout() {
@@ -94,7 +94,7 @@ export default function NavBar() {
                 <Link className="btn btn-ghost shadow max-sm:hidden" href="/">
                     Home
                 </Link>
-                {isLoggedIn && userData.user_type === "Teacher" && (
+                {isLoggedIn && teacherData.user_type === "Teacher" && (
                     <>
                         <Link
                             className="btn btn-ghost shadow"
@@ -111,7 +111,7 @@ export default function NavBar() {
                                 <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                     <Image
                                         alt="Profile Picture"
-                                        src={userData.profile_pic}
+                                        src={teacherData.profile_pic}
                                         width={40}
                                         height={40}
                                     />
@@ -123,9 +123,9 @@ export default function NavBar() {
                             >
                                 <li className="pointer-events-none">
                                     <p className="font-bold">
-                                        {userData.first_name}{" "}
-                                        {userData.last_name} (
-                                        {userData.user_type})
+                                        {teacherData.first_name}{" "}
+                                        {teacherData.last_name} (
+                                        {teacherData.user_type})
                                     </p>
                                 </li>
                                 <li>
@@ -140,60 +140,50 @@ export default function NavBar() {
                         </div>
                     </>
                 )}
+                {isLoggedIn && studentData.user_type === "Student" && (
+                    <div className="dropdown dropdown-end">
+                        <div
+                            tabIndex={0}
+                            role="button"
+                            className="btn btn-ghost btn-circle avatar"
+                        >
+                            <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <Image
+                                    alt="Profile Picture"
+                                    src={studentData.profile_pic}
+                                    width={40}
+                                    height={40}
+                                />
+                            </div>
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                        >
+                            <li className="pointer-events-none">
+                                <p className="font-bold">
+                                    {studentData.first_name}{" "}
+                                    {studentData.last_name} (
+                                    {studentData.user_type})
+                                </p>
+                            </li>
+                            <li>
+                                <Link href="/student/profile">Profile</Link>
+                            </li>
+                            <li>
+                                <button onClick={handleLogout}>Logout</button>
+                            </li>
+                        </ul>
+                    </div>
+                )}
                 {!isLoggedIn && (
                     <>
-                        <div className="dropdown dropdown-hover dropdown-end">
-                            <div tabIndex={0} role="button" className="btn m-1">
-                                Login
-                            </div>
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                            >
-                                <li>
-                                    <Link
-                                        className="btn btn-ghost shadow"
-                                        href="/teacher/login"
-                                    >
-                                        Teacher Login
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="btn btn-ghost shadow"
-                                        href="/teacher/login"
-                                    >
-                                        Student Login
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="dropdown dropdown-hover dropdown-end">
-                            <div tabIndex={0} role="button" className="btn m-1">
-                                Registration
-                            </div>
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                            >
-                                <li>
-                                    <Link
-                                        className="btn btn-ghost shadow"
-                                        href="/teacher/register"
-                                    >
-                                        Teacher Registration
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className="btn btn-ghost shadow"
-                                        href="/teacher/register"
-                                    >
-                                        Student Registration
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
+                        <Link className="btn btn-ghost shadow" href="/login">
+                            Login
+                        </Link>
+                        <Link className="btn btn-ghost shadow" href="/register">
+                            Register
+                        </Link>
                     </>
                 )}
             </div>

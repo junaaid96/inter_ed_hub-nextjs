@@ -12,7 +12,7 @@ export default function CourseUpdate({ params }) {
     const { id } = params;
 
     const authContext = useAuth();
-    const { isLoggedIn, userData, password, loading } = authContext;
+    const { isLoggedIn, teacherData, password, loading } = authContext;
     const router = useRouter();
 
     const [departments, setDepartments] = useState([]);
@@ -74,7 +74,7 @@ export default function CourseUpdate({ params }) {
                         Authorization:
                             "Basic " +
                             Buffer.from(
-                                userData.username + ":" + password
+                                teacherData.username + ":" + password
                             ).toString("base64"),
                     },
                 }

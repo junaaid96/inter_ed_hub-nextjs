@@ -9,8 +9,9 @@ import { useAuth } from "@/app/layout";
 export default function CreateCourse() {
     const [departments, setDepartments] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState("");
+    const [createLoading, setCreateLoading] = useState(false);
     const authContext = useAuth();
-    const { isLoggedIn, userData, loading, password } = authContext;
+    const { isLoggedIn, teacherData, loading, password } = authContext;
     const router = useRouter();
 
     useEffect(() => {
@@ -20,7 +21,7 @@ export default function CreateCourse() {
         );
         if (metaDescription) {
             metaDescription.content =
-                "An online school management system. This is the login page.";
+                "An online school management system. This is the course creation page.";
         }
 
         if (!isLoggedIn) {
@@ -35,6 +36,7 @@ export default function CreateCourse() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setCreateLoading(true);
         const formData = new FormData(e.currentTarget);
         const title = formData.get("title");
         const description = formData.get("description");
@@ -60,7 +62,7 @@ export default function CreateCourse() {
                         Authorization:
                             "Basic " +
                             Buffer.from(
-                                userData.username + ":" + password
+                                teacherData.username + ":" + password
                             ).toString("base64"),
                     },
                 }
@@ -78,12 +80,14 @@ export default function CreateCourse() {
                 setError("An error occurred while processing your request.");
             }
             console.error("Course creation failed:", error);
+        } finally {
+            setCreateLoading(false);
         }
     }
 
     return (
         <>
-            {loading ? (
+            {loading || createLoading ? (
                 <div className="min-h-screen w-24 m-auto">
                     <span className="loading loading-infinity loading-lg"></span>
                 </div>
@@ -133,7 +137,7 @@ export default function CreateCourse() {
                                     <span>{success}</span>
                                 </div>
                             )}
-                            {userData.user_type === "Teacher" ? (
+                            {teacherData.user_type === "Teacher" ? (
                                 <>
                                     <h1 className="text-3xl font-bold text-gray-800 mb-4">
                                         Create a New Course
@@ -144,9 +148,9 @@ export default function CreateCourse() {
                                     <input
                                         type="text"
                                         defaultValue={
-                                            userData.first_name +
+                                            teacherData.first_name +
                                             " " +
-                                            userData.last_name
+                                            teacherData.last_name
                                         }
                                         className="input input-bordered input-primary w-full"
                                         disabled

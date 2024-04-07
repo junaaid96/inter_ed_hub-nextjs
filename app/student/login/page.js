@@ -6,20 +6,20 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/app/layout";
 
-export default function TeacherLogin() {
+export default function StudentLogin() {
     const router = useRouter();
     const [error, setError] = useState("");
     const authContext = useAuth();
     const { isLoggedIn, setIsLoggedIn } = authContext;
 
     useEffect(() => {
-        document.title = "InterEd Hub | Teacher Login";
+        document.title = "InterEd Hub | Student Login";
         const metaDescription = document.querySelector(
             'meta[name="description"]'
         );
         if (metaDescription) {
             metaDescription.content =
-                "An online school management system. This is the teacher login page.";
+                "An online school management system. This is the student login page.";
         }
 
         if (isLoggedIn) {
@@ -35,7 +35,7 @@ export default function TeacherLogin() {
 
         try {
             const response = await axios.post(
-                "https://inter-ed-hub-drf.onrender.com/teachers/login/",
+                "https://inter-ed-hub-drf.onrender.com/students/login/",
                 {
                     username,
                     password,
@@ -107,7 +107,7 @@ export default function TeacherLogin() {
                                 <span>{error}</span>
                             </div>
                         ))}
-                    <h1 className="text-5xl font-bold">Teacher Login</h1>
+                    <h1 className="text-5xl font-bold">Student Login</h1>
                     <p className="py-6">
                         Welcome back! Please enter your credentials to access
                         your account.
@@ -158,7 +158,7 @@ export default function TeacherLogin() {
                         </div>
                     </form>
                 </div>
-                <Link href="/teacher/register" className="font-bold">
+                <Link href="/student/register" className="font-bold">
                     Don't have an account? Please{" "}
                     <span className="text-primary">Register</span>
                 </Link>

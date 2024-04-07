@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/app/layout";
 import getAllDepartments from "@/lib/getAllDepartments";
 
-export default function TeacherRegister() {
+export default function StudentRegister() {
     const router = useRouter();
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
@@ -17,13 +17,13 @@ export default function TeacherRegister() {
     const [selectedDepartment, setSelectedDepartment] = useState("");
 
     useEffect(() => {
-        document.title = "InterEd Hub | Teacher Registration";
+        document.title = "InterEd Hub | Student Registration";
         const metaDescription = document.querySelector(
             'meta[name="description"]'
         );
         if (metaDescription) {
             metaDescription.content =
-                "An online school management system. This is the teacher registration page.";
+                "An online school management system. This is the student registration page.";
         }
 
         if (isLoggedIn) {
@@ -44,7 +44,6 @@ export default function TeacherRegister() {
         const confirm_password = formData.get("confirm_password");
         const profile_pic = formData.get("profile_pic");
         const bio = formData.get("bio");
-        const designation = formData.get("designation");
         const department = formData.get("department");
         const phone = formData.get("phone");
 
@@ -55,7 +54,7 @@ export default function TeacherRegister() {
 
         try {
             const response = await axios.post(
-                "https://inter-ed-hub-drf.onrender.com/teachers/register/",
+                "https://inter-ed-hub-drf.onrender.com/students/register/",
                 {
                     username,
                     first_name,
@@ -65,7 +64,6 @@ export default function TeacherRegister() {
                     confirm_password,
                     profile_pic,
                     bio,
-                    designation,
                     department,
                     phone,
                 },
@@ -127,7 +125,7 @@ export default function TeacherRegister() {
                             <span>{success}</span>
                         </div>
                     )}
-                    <h1 className="text-5xl font-bold">Teacher Register</h1>
+                    <h1 className="text-5xl font-bold">Student Register</h1>
                     <p className="py-6">
                         Welcome! Please fill in the following details to create
                         your account.
@@ -277,20 +275,6 @@ export default function TeacherRegister() {
                             ></textarea>
                         </div>
                         <div className="form-control">
-                            <label className="label" htmlFor="designation">
-                                <span className="label-text">Designation</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="designation"
-                                name="designation"
-                                placeholder="Designation"
-                                className="input input-bordered input-primary"
-                                required
-                                aria-label="Designation"
-                            />
-                        </div>
-                        <div className="form-control">
                             <label className="label" htmlFor="department">
                                 <span className="label-text">Department</span>
                             </label>
@@ -325,7 +309,7 @@ export default function TeacherRegister() {
                         </div>
                     </form>
                 </div>
-                <Link href="/teacher/login" className="font-bold">
+                <Link href="/student/login" className="font-bold">
                     Already have an account? Please{" "}
                     <span className="text-primary">Login</span>
                 </Link>
