@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Carousel from "./components/Carousel";
 import Hero from "./components/Hero";
+import Roadmap from "./components/Roadmap";
 import { useSearchTerm } from "./layout";
 import getAllDepartments from "@/lib/getAllDepartments";
 
@@ -154,6 +155,11 @@ export default function Home() {
             </p>
             <div className="w-1/2 m-auto mt-10">
                 <Carousel />
+            </div>
+            {/* Roadmap */}
+            <div className="mt-12">
+                <h1 className="text-2xl font-bold mb-6">Roadmap</h1>
+                <Roadmap />
             </div>
         </main>
     );

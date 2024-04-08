@@ -83,9 +83,12 @@ export default function NavBar() {
                         </Link>
                         <div className="form-control">
                             <input
+                                id="search"
                                 type="text"
                                 placeholder="Search"
-                                className="input input-bordered w-40"
+                                className="input input-bordered w-24 md:w-auto max-sm:hidden"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
                     </ul>

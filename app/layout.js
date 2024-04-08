@@ -15,6 +15,7 @@ const SearchTermContext = createContext();
 
 export default function RootLayout({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [password, setPassword] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
     const [teacherData, setTeacherData] = useState({
         username: "",
@@ -38,8 +39,7 @@ export default function RootLayout({ children }) {
         phone: "",
     });
     const [loading, setLoading] = useState(true);
-    const password = localStorage.getItem("password") || "";
-
+    
     useEffect(() => {
         document.title = "InterEd Hub";
         const metaDescription = document.querySelector(
@@ -48,24 +48,28 @@ export default function RootLayout({ children }) {
         if (metaDescription) {
             metaDescription.content = "An online school management system.";
         }
+        
+        if (typeof window !== "undefined") {
+            const token = localStorage.getItem("token");
+            const parsedToken = token ? JSON.parse(token) : null;
+            const pass = localStorage.getItem("password") || "";
+            setPassword(pass);
+            setIsLoggedIn(!!parsedToken); // !! converts to boolean
 
-        const token = localStorage.getItem("token");
-        const parsedToken = token ? JSON.parse(token) : null;
-        setIsLoggedIn(!!parsedToken); // !! converts to boolean
-
-        if (parsedToken && parsedToken.user_type === "Teacher") {
-            getTeacher(parsedToken.teacher_id).then((data) => {
-                setTeacherData(data);
+            if (parsedToken && parsedToken.user_type === "Teacher") {
+                getTeacher(parsedToken.teacher_id).then((data) => {
+                    setTeacherData(data);
+                    setLoading(false);
+                });
+            } else if (parsedToken && parsedToken.user_type === "Student") {
+                getStudent(parsedToken.student_id).then((data) => {
+                    setStudentData(data);
+                    setLoading(false);
+                });
+            } else {
+                console.log("Token is not available. User needs to log in.");
                 setLoading(false);
-            });
-        } else if (parsedToken && parsedToken.user_type === "Student") {
-            getStudent(parsedToken.student_id).then((data) => {
-                setStudentData(data);
-                setLoading(false);
-            });
-        } else {
-            console.log("Token is not available. User needs to log in.");
-            setLoading(false);
+            }
         }
     }, []);
 

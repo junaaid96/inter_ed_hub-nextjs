@@ -7,22 +7,22 @@ import { useAuth } from "@/app/layout";
 import axios from "axios";
 import getAllDepartments from "@/lib/getAllDepartments";
 
-export default function TeacherProfileUpdate() {
+export default function StudentProfileUpdate() {
     const authContext = useAuth();
-    const { isLoggedIn, teacherData, password, loading } = authContext;
+    const { isLoggedIn, studentData, password, loading } = authContext;
     const router = useRouter();
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [departments, setDepartments] = useState([]);
 
     useEffect(() => {
-        document.title = "InterEd Hub | Teacher Profile Update";
+        document.title = "InterEd Hub | Student Profile Update";
         const metaDescription = document.querySelector(
             'meta[name="description"]'
         );
         if (metaDescription) {
             metaDescription.content =
-                "An online school management system. This is the teacher profile update page.";
+                "An online school management system. This is the student profile update page.";
         }
 
         if (!isLoggedIn) {
@@ -41,7 +41,6 @@ export default function TeacherProfileUpdate() {
         const email = formData.get("email");
         const profile_pic = formData.get("profile_pic");
         const bio = formData.get("bio");
-        const designation = formData.get("designation");
         const department = formData.get("department");
         const phone = formData.get("phone");
 
@@ -52,14 +51,13 @@ export default function TeacherProfileUpdate() {
             email,
             profile_pic,
             bio,
-            designation,
             department,
             phone,
         };
 
         try {
             const response = await axios.put(
-                "https://inter-ed-hub-drf.onrender.com/teachers/update/",
+                "https://inter-ed-hub-drf.onrender.com/students/update/",
                 data,
                 {
                     headers: {
@@ -67,7 +65,7 @@ export default function TeacherProfileUpdate() {
                         Authorization:
                             "Basic " +
                             Buffer.from(
-                                teacherData.username + ":" + password
+                                studentData.username + ":" + password
                             ).toString("base64"),
                     },
                 }
@@ -134,20 +132,22 @@ export default function TeacherProfileUpdate() {
                                 </div>
                             )}
                             <h1 className="text-5xl font-bold">
-                                Teacher Profile Update
+                                Student Profile Update
                             </h1>
                             <p className="py-6">
                                 Welcome! Please update your profile details
                                 below.
                             </p>
                             <div className="card flex-shrink-0 w-full shadow-2xl bg-base-100">
-                                {teacherData.profile_pic ? (
+                                {studentData.profile_pic ? (
                                     <>
                                         <div className="avatar">
                                             <div className="w-24 m-auto mt-6 rounded">
                                                 <Image
                                                     alt="Profile Picture"
-                                                    src={teacherData.profile_pic}
+                                                    src={
+                                                        studentData.profile_pic
+                                                    }
                                                     width={100}
                                                     height={100}
                                                     className="circle"
@@ -178,7 +178,7 @@ export default function TeacherProfileUpdate() {
                                             name="username"
                                             placeholder="Username"
                                             className="input input-bordered input-primary"
-                                            value={teacherData.username}
+                                            value={studentData.username}
                                             disabled
                                         />
                                     </div>
@@ -199,7 +199,7 @@ export default function TeacherProfileUpdate() {
                                                 placeholder="First Name"
                                                 className="input input-bordered input-primary"
                                                 defaultValue={
-                                                    teacherData.first_name
+                                                    studentData.first_name
                                                 }
                                                 required
                                             />
@@ -220,7 +220,7 @@ export default function TeacherProfileUpdate() {
                                                 placeholder="Last Name"
                                                 className="input input-bordered input-primary"
                                                 defaultValue={
-                                                    teacherData.last_name
+                                                    studentData.last_name
                                                 }
                                                 required
                                             />
@@ -242,7 +242,7 @@ export default function TeacherProfileUpdate() {
                                                 name="email"
                                                 placeholder="Email"
                                                 className="input input-bordered input-primary"
-                                                value={teacherData.email}
+                                                value={studentData.email}
                                                 disabled
                                             />
                                         </div>
@@ -261,7 +261,7 @@ export default function TeacherProfileUpdate() {
                                                 name="phone"
                                                 placeholder="Phone"
                                                 className="input input-bordered input-primary"
-                                                defaultValue={teacherData.phone}
+                                                defaultValue={studentData.phone}
                                                 required
                                             />
                                         </div>
@@ -293,64 +293,37 @@ export default function TeacherProfileUpdate() {
                                             name="bio"
                                             placeholder="Bio"
                                             className="textarea textarea-bordered textarea-primary"
-                                            defaultValue={teacherData.bio}
+                                            defaultValue={studentData.bio}
                                             required
                                         ></textarea>
                                     </div>
-                                    <div className="flex gap-6">
-                                        <div className="form-control">
-                                            <label
-                                                className="label"
-                                                htmlFor="designation"
-                                            >
-                                                <span className="label-text">
-                                                    Designation
-                                                </span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="designation"
-                                                name="designation"
-                                                placeholder="Designation"
-                                                className="input input-bordered input-primary"
-                                                defaultValue={
-                                                    teacherData.designation
-                                                }
-                                                required
-                                            />
-                                        </div>
-                                        <div className="form-control">
-                                            <label
-                                                className="label"
-                                                htmlFor="department"
-                                            >
-                                                <span className="label-text">
-                                                    Department
-                                                </span>
-                                            </label>
-                                            <select
-                                                id="department"
-                                                name="department"
-                                                className="select select-bordered select-primary"
-                                                defaultValue={
-                                                    teacherData.department
-                                                }
-                                                required
-                                            >
-                                                {departments.map(
-                                                    (department) => (
-                                                        <option
-                                                            key={department.id}
-                                                            value={
-                                                                department.id
-                                                            }
-                                                        >
-                                                            {department.name}
-                                                        </option>
-                                                    )
-                                                )}
-                                            </select>
-                                        </div>
+                                    <div className="form-control">
+                                        <label
+                                            className="label"
+                                            htmlFor="department"
+                                        >
+                                            <span className="label-text">
+                                                Department
+                                            </span>
+                                        </label>
+                                        <select
+                                            id="department"
+                                            name="department"
+                                            className="select select-bordered select-primary"
+                                            defaultValue={
+                                                studentData.department
+                                            }
+                                            required
+                                        >
+                                            {departments.map((department) => (
+                                                <option
+                                                    key={department.id}
+                                                    value={department.id}
+                                                >
+                                                    {department.name}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
 
                                     <button
