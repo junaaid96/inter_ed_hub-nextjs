@@ -88,7 +88,7 @@ export default function CreateCourse() {
     return (
         <>
             {loading || createLoading ? (
-                <div className="min-h-screen w-24 m-auto">
+                <div className="flex items-center justify-center min-h-screen w-24 m-auto">
                     <span className="loading loading-infinity loading-lg"></span>
                 </div>
             ) : (
