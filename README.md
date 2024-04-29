@@ -32,6 +32,6 @@ This project implements an online school platform with functionalities for user 
 
 ## Technologies Used
 
-- This is a Front-end developed using Next.js.
+- This is a Frontend developed using Next.js.
 - Backend developed using Django Rest Framework.
 - Backend Git Repository: https://github.com/junaaid96/inter_ed_hub-drf 
