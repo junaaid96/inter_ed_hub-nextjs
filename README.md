@@ -1,39 +1,38 @@
+# InterEd Hub - An Online School
+
 Live Link: https://inter-ed-hub-nextjs.vercel.app/
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Overview
 
-## Getting Started
+This project implements an online school platform with functionalities for user registration, course creation, management, and listings. It aims to provide a seamless experience for both teachers and students.
 
-First, run the development server:
+## Functionalities
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 1. User Registration and Authentication
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Users can register by providing necessary details.
+- Email verification is implemented for account activation.
+- Secure login and logout processes are ensured through authentication mechanisms.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 2. Course Creation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Teachers can create courses tailored for their students.
+- Details such as title, description, and department can be specified during course creation.
 
-## Learn More
+### 3. Course Management
 
-To learn more about Next.js, take a look at the following resources:
+- Teachers have the authority to update and delete courses they've created.
+- Course management functionalities are restricted to courses added by the respective teacher.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Course Listings
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- The homepage displays a comprehensive list of available courses.
+- Each course is presented with essential details including title, description, department, etc.
+- Students can filter courses based on departments for easy navigation.
 
-## Deploy on Vercel
+## Technologies Used
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# inter_ed_hub-nextjs
+- This is the Frontend developed using Next.js.
+- Backend developed using Django Rest Framework.
+- SQLite database used.
+- Backend Git Repository: https://github.com/junaaid96/inter_ed_hub-drf 
