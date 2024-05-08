@@ -126,19 +126,22 @@ export default function StudentProfile() {
                                 className="flex flex-col items-center mb-4"
                             >
                                 <div className="card w-96 bg-base-100 shadow-xl">
-                                    <figure>
+                                    <figure className="w-96 h-56 relative">
                                         <Image
                                             src={myCourse.image}
                                             alt="Course Cover"
-                                            width={384}
-                                            height={216}
+                                            layout="fill"
+                                            objectFit="cover"
                                         />
                                     </figure>
                                     <div className="card-body">
                                         <h2 className="card-title">
                                             {myCourse.title}
                                         </h2>
-                                        <p>{myCourse.description}</p>
+                                        <p>
+                                            {myCourse.description.slice(0, 100)}
+                                            ...
+                                        </p>
                                         <div className="card-actions justify-end">
                                             <Link
                                                 href={`#`}

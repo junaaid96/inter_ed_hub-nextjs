@@ -317,6 +317,10 @@ export default function StudentProfileUpdate() {
                                         >
                                             {departments.map((department) => (
                                                 <option
+                                                    selected={
+                                                        department.name ===
+                                                        studentData.department
+                                                    }
                                                     key={department.id}
                                                     value={department.id}
                                                 >

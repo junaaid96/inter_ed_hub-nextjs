@@ -147,7 +147,9 @@ export default function TeacherProfileUpdate() {
                                             <div className="w-24 m-auto mt-6 rounded">
                                                 <Image
                                                     alt="Profile Picture"
-                                                    src={teacherData.profile_pic}
+                                                    src={
+                                                        teacherData.profile_pic
+                                                    }
                                                     width={100}
                                                     height={100}
                                                     className="circle"
@@ -340,6 +342,10 @@ export default function TeacherProfileUpdate() {
                                                 {departments.map(
                                                     (department) => (
                                                         <option
+                                                            selected={
+                                                                department.name ===
+                                                                teacherData.department
+                                                            }
                                                             key={department.id}
                                                             value={
                                                                 department.id

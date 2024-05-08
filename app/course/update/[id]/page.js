@@ -221,6 +221,10 @@ export default function CourseUpdate({ params }) {
                                     >
                                         {departments.map((department) => (
                                             <option
+                                                selected={
+                                                    department.name ===
+                                                    teacherData.department
+                                                }
                                                 key={department.id}
                                                 value={department.id}
                                             >

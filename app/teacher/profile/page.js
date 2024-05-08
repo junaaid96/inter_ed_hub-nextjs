@@ -63,7 +63,8 @@ export default function TeacherProfile() {
                             </div>
                             <div className="ml-4">
                                 <p className="text-gray-800 font-semibold">
-                                    {teacherData.first_name} {teacherData.last_name}
+                                    {teacherData.first_name}{" "}
+                                    {teacherData.last_name}
                                 </p>
                                 <p className="text-gray-600">
                                     {teacherData.email}
@@ -131,19 +132,22 @@ export default function TeacherProfile() {
                                 className="flex flex-col items-center mb-4"
                             >
                                 <div className="card w-96 bg-base-100 shadow-xl">
-                                    <figure>
+                                    <figure className="w-96 h-56 relative">
                                         <Image
                                             src={myCourse.image}
                                             alt="Course Cover"
-                                            width={384}
-                                            height={216}
+                                            layout="fill"
+                                            objectFit="cover"
                                         />
                                     </figure>
                                     <div className="card-body">
                                         <h2 className="card-title">
                                             {myCourse.title}
                                         </h2>
-                                        <p>{myCourse.description}</p>
+                                        <p>
+                                            {myCourse.description.slice(0, 100)}
+                                            ...
+                                        </p>
                                         <div className="card-actions justify-end">
                                             <Link
                                                 href={`/course/update/${myCourse.id}`}
