@@ -20,98 +20,88 @@ export default function NavBar() {
     }
 
     return (
-        <div className="navbar bg-base-200 rounded-md">
-            <div className="flex-1 max-sm:hidden">
+        <nav className="navbar bg-base-200 rounded-md px-4 py-2">
+            <div className="flex-1 flex items-center">
                 <Image src="/icon.png" alt="icon" width={60} height={60} />
-                <Link href={"/"} className="btn btn-ghost text-xl font-bold">
+                <Link
+                    href="/"
+                    className="btn btn-ghost lg:text-xl lg:font-bold ml-2 text-sm"
+                >
                     InterEd Hub
                 </Link>
-                <div className="form-control w-1/3 m-auto">
+                <div className=" sm:flex form-control w-1/3 mx-auto">
                     <input
                         id="search"
                         type="text"
                         placeholder="Search"
-                        className="input input-bordered w-24 md:w-auto max-sm:hidden"
+                        className="input input-bordered w-full"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
             </div>
-            <div className="flex-none gap-3 max-sm:justify-between max-sm:flex-1">
-                {/* for sm devices */}
-                <div className="dropdown lg:hidden md:hidden justify-end">
-                    <div
-                        tabIndex={0}
-                        role="button"
-                        className="btn btn-ghost btn-circle"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+            <div className="flex-none gap-3 flex items-center">
+                {!isLoggedIn && (
+                    <div className="dropdown lg:hidden dropdown-end">
+                        <button
+                            tabIndex={0}
+                            className="btn btn-ghost btn-circle"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M4 6h16M4 12h16M4 18h7"
-                            />
-                        </svg>
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                    >
-                        <div className="flex">
-                            <Image
-                                src="/icon.png"
-                                alt="icon"
-                                width={30}
-                                height={30}
-                            />
-                            <Link
-                                href={"/"}
-                                className="btn btn-ghost font-bold"
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
                             >
-                                InterEd Hub
-                            </Link>
-                        </div>
-                        <Link className="btn btn-ghost shadow my-3" href="/">
-                            Home
-                        </Link>
-                        <div className="form-control">
-                            <input
-                                id="search"
-                                type="text"
-                                placeholder="Search"
-                                className="input input-bordered w-24 md:w-auto max-sm:hidden"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                        </div>
-                    </ul>
-                </div>
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M4 6h16M4 12h16M4 18h7"
+                                />
+                            </svg>
+                        </button>
+                        <ul
+                            tabIndex={0}
+                            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                        >
+                            <li>
+                                <Link
+                                    className="btn btn-ghost shadow btn-sm"
+                                    href="/login"
+                                >
+                                    Login
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    className="btn btn-ghost shadow btn-sm"
+                                    href="/register"
+                                >
+                                    Register
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                )}
 
-                <Link className="btn btn-ghost shadow max-sm:hidden" href="/">
-                    Home
-                </Link>
                 {isLoggedIn && teacherData.user_type === "Teacher" && (
                     <>
-                        <Link
-                            className="btn btn-ghost shadow"
-                            href="/course/create"
-                        >
-                            Create Course
-                        </Link>
+                        <div className="hidden lg:block">
+                            <Link
+                                className="btn btn-ghost shadow"
+                                href="/course/create"
+                            >
+                                Create Course
+                            </Link>
+                        </div>
                         <div className="dropdown dropdown-end">
-                            <div
+                            <button
                                 tabIndex={0}
-                                role="button"
                                 className="btn btn-ghost btn-circle avatar"
                             >
-                                <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                     <Image
                                         alt="Profile Picture"
                                         src={teacherData.profile_pic}
@@ -119,7 +109,7 @@ export default function NavBar() {
                                         height={40}
                                     />
                                 </div>
-                            </div>
+                            </button>
                             <ul
                                 tabIndex={0}
                                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
@@ -130,6 +120,14 @@ export default function NavBar() {
                                         {teacherData.last_name} (
                                         {teacherData.user_type})
                                     </p>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="btn btn-ghost shadow lg:hidden"
+                                        href="/course/create"
+                                    >
+                                        Create Course
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link href="/teacher/profile">Profile</Link>
@@ -145,12 +143,11 @@ export default function NavBar() {
                 )}
                 {isLoggedIn && studentData.user_type === "Student" && (
                     <div className="dropdown dropdown-end">
-                        <div
+                        <button
                             tabIndex={0}
-                            role="button"
                             className="btn btn-ghost btn-circle avatar"
                         >
-                            <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                            <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                 <Image
                                     alt="Profile Picture"
                                     src={studentData.profile_pic}
@@ -158,7 +155,7 @@ export default function NavBar() {
                                     height={40}
                                 />
                             </div>
-                        </div>
+                        </button>
                         <ul
                             tabIndex={0}
                             className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
@@ -180,16 +177,16 @@ export default function NavBar() {
                     </div>
                 )}
                 {!isLoggedIn && (
-                    <>
+                    <div className="hidden lg:block">
                         <Link className="btn btn-ghost shadow" href="/login">
                             Login
                         </Link>
                         <Link className="btn btn-ghost shadow" href="/register">
                             Register
                         </Link>
-                    </>
+                    </div>
                 )}
             </div>
-        </div>
+        </nav>
     );
 }

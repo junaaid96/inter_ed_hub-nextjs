@@ -85,7 +85,7 @@ export default function RootLayout({ children }) {
             }}
         >
             <SearchTermContext.Provider value={{ searchTerm, setSearchTerm }}>
-                <html lang="en" data-theme="emerald">
+                <html lang="en" data-theme="pastel">
                     <body className={inter.className}>
                         <NavBar />
                         {children}

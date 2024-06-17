@@ -36,11 +36,11 @@ export default function Carousel() {
                     grabCursor={true}
                     effect="cards"
                     onSwiper={(swiper) => console.log(swiper)}
-                    className="rounded-lg shadow-lg"
+                    className="rounded-lg shadow-lg w-full"
                 >
                     {teachers.map((teacher, index) => (
                         <SwiperSlide key={index}>
-                            <div className="card card-compact bg-base-100 shadow-xl p-12">
+                            <div className="card lg:card-compact bg-base-200 shadow-xl lg:p-12">
                                 <figure>
                                     <Image
                                         src={teacher.profile_pic}

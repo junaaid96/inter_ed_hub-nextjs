@@ -2,14 +2,9 @@ import Image from "next/image";
 
 export default function Footer() {
     return (
-        <footer className="footer footer-center p-6 bg-base-200 text-primary-content mt-10">
+        <footer className="footer footer-center p-6 bg-base-200 border-t shadow text-primary-content mt-10">
             <aside>
-                <Image 
-                    src="/icon.png"
-                    alt="icon"
-                    width={100}
-                    height={100}
-                />
+                <Image src="/icon.png" alt="icon" width={100} height={100} />
                 <p className="font-bold">
                     InterEd Hub <br />
                     Nurturing minds, shaping futures since 2024
