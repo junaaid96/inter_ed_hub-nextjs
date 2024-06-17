@@ -37,6 +37,11 @@ export default function NavBar() {
                         className="input input-bordered w-full"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                window.location.href = "/#courses";
+                            }
+                        }}
                     />
                 </div>
             </div>

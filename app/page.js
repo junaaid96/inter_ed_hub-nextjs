@@ -77,7 +77,9 @@ export default function Home() {
             <Hero />
 
             {/* All Courses */}
-            <h2 className="mt-6 mb-3 text-2xl font-bold">Available Courses</h2>
+            <h2 id="courses" className="mt-6 mb-3 text-2xl font-bold">
+                Available Courses
+            </h2>
             {/* Filter Course by Department */}
             <button
                 className="btn btn-sm btn-outline btn-rounded mt-2 mr-2"
