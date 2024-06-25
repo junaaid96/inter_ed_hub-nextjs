@@ -1,6 +1,7 @@
 # InterEd Hub - An Online School
 
 Live Link: https://inter-ed-hub-nextjs.vercel.app/
+Backend repo: https://github.com/junaaid96/inter_ed_hub-drf 
 
 ## Overview
 
@@ -35,4 +36,3 @@ This project implements an online school platform with functionalities for user 
 - This is the Frontend developed using Next.js.
 - Backend developed using Django Rest Framework.
 - SQLite database used.
-- Backend Git Repository: https://github.com/junaaid96/inter_ed_hub-drf 
