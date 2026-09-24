@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-export default function Error() {
+export default function Error({ error, reset }) {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="max-w-lg p-8 bg-white rounded-lg shadow-lg">
-                <h1 className="text-3xl font-bold text-red-600 mb-4">Something went wrong!</h1>
-                <p className="text-gray-800">We apologize, but an error has occurred.</p>
-                <p className="text-gray-800">Please try again later or contact support.</p>
-            </div>
+        <div className="mx-auto max-w-xl px-4 py-24 text-center">
+            <h1 className="font-display text-3xl font-bold tracking-tight">Something went wrong</h1>
+            <p className="mt-3 text-ink-2">{error?.message || "An unexpected error occurred."}</p>
+            <button onClick={reset} className="btn btn-primary mt-8">
+                Try again
+            </button>
         </div>
     );
 }

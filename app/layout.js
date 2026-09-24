@@ -1,106 +1,49 @@
-"use client";
-
-import { Inter } from "next/font/google";
+import { Bricolage_Grotesque, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
-import { createContext, useState, useEffect, useContext } from "react";
-import getTeacher from "@/lib/getTeacher";
-import getStudent from "@/lib/getStudent";
+import Providers from "./providers";
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
+import { themeScript } from "@/lib/theme";
 
-const inter = Inter({ subsets: ["latin"] });
+const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display-face", display: "swap" });
+const body = Manrope({ subsets: ["latin"], variable: "--font-body", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono-face", display: "swap" });
 
-const AuthContext = createContext();
-const SearchTermContext = createContext();
+export const metadata = {
+    title: { default: "InterEd Hub - Learn from real teachers", template: "%s | InterEd Hub" },
+    description:
+        "Video courses from real teachers. Stream lessons, take timestamped notes, keep a learning streak and earn certificates.",
+    icons: { icon: "/icon.png" },
+};
+
+export const viewport = {
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#f5f4ef" },
+        { media: "(prefers-color-scheme: dark)", color: "#0f1211" },
+    ],
+};
 
 export default function RootLayout({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [password, setPassword] = useState("");
-    const [searchTerm, setSearchTerm] = useState("");
-    const [teacherData, setTeacherData] = useState({
-        username: "",
-        email: "",
-        first_name: "",
-        last_name: "",
-        profile_pic: null,
-        bio: "",
-        designation: "",
-        department: "",
-        phone: "",
-    });
-    const [studentData, setStudentData] = useState({
-        username: "",
-        email: "",
-        first_name: "",
-        last_name: "",
-        profile_pic: null,
-        bio: "",
-        department: "",
-        phone: "",
-    });
-    const [loading, setLoading] = useState(true);
-    
-    useEffect(() => {
-        document.title = "InterEd Hub";
-        const metaDescription = document.querySelector(
-            'meta[name="description"]'
-        );
-        if (metaDescription) {
-            metaDescription.content = "An online school management system.";
-        }
-        
-        if (typeof window !== "undefined") {
-            const token = localStorage.getItem("token");
-            const parsedToken = token ? JSON.parse(token) : null;
-            const pass = localStorage.getItem("password") || "";
-            setPassword(pass);
-            setIsLoggedIn(!!parsedToken); // !! converts to boolean
-
-            if (parsedToken && parsedToken.user_type === "Teacher") {
-                getTeacher(parsedToken.teacher_id).then((data) => {
-                    setTeacherData(data);
-                    setLoading(false);
-                });
-            } else if (parsedToken && parsedToken.user_type === "Student") {
-                getStudent(parsedToken.student_id).then((data) => {
-                    setStudentData(data);
-                    setLoading(false);
-                });
-            } else {
-                console.log("Token is not available. User needs to log in.");
-                setLoading(false);
-            }
-        }
-    }, []);
-
     return (
-        <AuthContext.Provider
-            value={{
-                isLoggedIn,
-                setIsLoggedIn,
-                teacherData,
-                studentData,
-                password,
-                loading,
-            }}
-        >
-            <SearchTermContext.Provider value={{ searchTerm, setSearchTerm }}>
-                <html lang="en" data-theme="pastel">
-                    <body className={inter.className}>
-                        <NavBar />
+        <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${mono.variable}`}>
+            <head>
+                <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+            </head>
+            <body className="flex min-h-[100dvh] flex-col bg-paper font-sans text-ink">
+                <Providers>
+                    <a
+                        href="#main"
+                        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+                    >
+                        Skip to content
+                    </a>
+                    <NavBar />
+                    <main id="main" className="flex-1">
                         {children}
-                        <Footer />
-                    </body>
-                </html>
-            </SearchTermContext.Provider>
-        </AuthContext.Provider>
+                    </main>
+                    <Footer />
+                </Providers>
+            </body>
+        </html>
     );
-}
-
-export function useSearchTerm() {
-    return useContext(SearchTermContext);
-}
-
-export function useAuth() {
-    return useContext(AuthContext);
 }

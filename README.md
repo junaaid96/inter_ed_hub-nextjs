@@ -1,38 +1,59 @@
-# InterEd Hub - An Online School
+# InterEd Hub
 
-Live Link: https://inter-ed-hub-nextjs.vercel.app/
-Backend repo: https://github.com/junaaid96/inter_ed_hub-drf 
+A video-first online course platform. Students stream lessons, pin notes to the
+exact second, keep a daily learning streak and earn verifiable certificates.
+Teachers build courses in a studio with drag-and-drop curriculum and direct
+video uploads to Neon Object Storage.
 
-## Overview
+- API (Django REST Framework + Neon): https://github.com/junaaid96/inter_ed_hub-drf
+- Live: https://inter-ed-hub-nextjs.vercel.app/
 
-This project implements an online school platform with functionalities for user registration, course creation, management, and listings. It aims to provide a seamless experience for both teachers and students.
+## Features
 
-## Functionalities
+**Learners**
+- Catalog with search, subject, level, length and rating filters (all URL-synced and shareable)
+- Course pages with free-preview lessons, curriculum, instructor card and rating breakdown
+- Learning player: resume where you left off, speed memory, keyboard shortcuts
+  (`Space/K`, `J/L`, `←/→`, `[`/`]`, `F`, `M`, `N`, `?`), auto-advance countdown and
+  automatic re-signing of expired video URLs
+- **Timestamped notes**: press `N` while watching, click a note to jump back
+- Per-lesson **discussion** with timestamps and highlighted instructor replies
+- Dashboard with **streaks**, weekly minutes, a 12-week activity heatmap and continue-learning
+- Printable, shareable **certificates** with a public verification link
 
-### 1. User Registration and Authentication
+**Teachers**
+- Studio: sections, video and reading lessons, drag-and-drop reordering, preview toggles
+- Direct-to-storage uploads with progress, speed and ETA; files over 64 MB upload in
+  parallel chunks with per-chunk retries; **bulk upload** turns dropped videos into lessons
+- Dashboard: learners, rating, minutes watched, 30-day enrollment chart, question inbox,
+  per-course completion rates
 
-- Users can register by providing necessary details.
-- Email verification is implemented for account activation.
-- Secure login and logout processes are ensured through authentication mechanisms.
+**Everywhere**: light and dark theme, responsive down to phones, accessible labels,
+focus states and reduced-motion support.
 
-### 2. Course Creation
+## Stack
 
-- Teachers can create courses tailored for their students.
-- Details such as title, description, and department can be specified during course creation.
+Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · Phosphor icons ·
+react-markdown. No UI kit; design tokens live in `app/globals.css`.
 
-### 3. Course Management
+## Getting started
 
-- Teachers have the authority to update and delete courses they've created.
-- Course management functionalities are restricted to courses added by the respective teacher.
+```bash
+npm install
+cp .env.example .env.local   # point NEXT_PUBLIC_API_URL at the API
+npm run dev
+```
 
-### 4. Course Listings
+| Variable | Description |
+| --- | --- |
+| `NEXT_PUBLIC_API_URL` | Base URL of the Django API, e.g. `https://inter-ed-hub-drf.onrender.com` |
 
-- The homepage displays a comprehensive list of available courses.
-- Each course is presented with essential details including title, description, department, etc.
-- Students can filter courses based on departments for easy navigation.
+## Project layout
 
-## Technologies Used
-
-- This is the Frontend developed using Next.js.
-- Backend developed using Django Rest Framework.
-- SQLite database used.
+```
+app/                 routes (catalog, course, learn player, dashboard, studio, auth, certificates)
+components/          UI primitives, course cards, charts, player and studio components
+lib/api.js           fetch wrapper with token auth and DRF error parsing
+lib/upload.js        presigned single/multipart uploads with progress
+lib/auth.js          session context
+```
