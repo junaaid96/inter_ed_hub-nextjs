@@ -1,3 +1,172 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Palette: "Forest" - ink on paper with a single deep-green accent. */
+:root {
+    --paper: #f5f4ef;
+    --surface: #ffffff;
+    --surface-2: #eceae2;
+    --ink: #16181a;
+    --ink-2: #4a4f55;
+    --ink-3: #7a8087;
+    --line: #dddbd2;
+    --accent: #1f6b45;
+    --accent-ink: #ffffff;
+    --accent-soft: #dcebe1;
+    --warn: #b4531f;
+    --danger: #b3261e;
+    --star: #c98a12;
+    color-scheme: light;
+}
+
+.dark {
+    --paper: #0f1211;
+    --surface: #161a19;
+    --surface-2: #1e2322;
+    --ink: #eef0ec;
+    --ink-2: #b6bcb7;
+    --ink-3: #858c87;
+    --line: #2a302e;
+    --accent: #5fc48f;
+    --accent-ink: #07130d;
+    --accent-soft: #173526;
+    --warn: #f0935a;
+    --danger: #f2837b;
+    --star: #f2bd4b;
+    color-scheme: dark;
+}
+
+@theme inline {
+    --color-paper: var(--paper);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-ink: var(--ink);
+    --color-ink-2: var(--ink-2);
+    --color-ink-3: var(--ink-3);
+    --color-line: var(--line);
+    --color-accent: var(--accent);
+    --color-accent-ink: var(--accent-ink);
+    --color-accent-soft: var(--accent-soft);
+    --color-warn: var(--warn);
+    --color-danger: var(--danger);
+    --color-star: var(--star);
+    --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-display-face), var(--font-body), ui-sans-serif, sans-serif;
+    --font-mono: var(--font-mono-face), ui-monospace, monospace;
+    --radius-card: 14px;
+}
+
+html {
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    min-height: 100dvh;
+}
+
+::selection {
+    background: var(--accent-soft);
+    color: var(--ink);
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-5 h-11 text-sm font-semibold whitespace-nowrap transition-[background-color,color,border-color,transform] duration-150 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none cursor-pointer;
+    }
+    .btn-sm {
+        @apply h-9 px-4 text-[13px];
+    }
+    .btn-primary {
+        @apply bg-accent text-accent-ink hover:brightness-110;
+    }
+    .btn-ink {
+        @apply bg-ink text-paper hover:opacity-90;
+    }
+    .btn-ghost {
+        @apply text-ink hover:bg-surface-2;
+    }
+    .btn-outline {
+        @apply border border-line bg-surface text-ink hover:border-ink-3;
+    }
+    .btn-danger {
+        @apply text-danger hover:bg-danger/10;
+    }
+    .card {
+        @apply rounded-[var(--radius-card)] border border-line bg-surface;
+    }
+    .field {
+        @apply w-full rounded-xl border border-line bg-surface px-3.5 h-11 text-[15px] text-ink placeholder:text-ink-3 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20;
+    }
+    textarea.field {
+        @apply h-auto py-2.5 leading-relaxed;
+    }
+    .label {
+        @apply mb-1.5 block text-[13px] font-semibold text-ink-2;
+    }
+    .chip {
+        @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 h-8 text-[13px] font-medium text-ink-2 transition-colors hover:border-ink-3 cursor-pointer;
+    }
+    .chip[data-active="true"] {
+        @apply border-ink bg-ink text-paper;
+    }
+    .skeleton {
+        @apply animate-pulse rounded-lg bg-surface-2;
+    }
+    .prose-lesson {
+        @apply text-[15px] leading-7 text-ink-2;
+    }
+    .prose-lesson h1 {
+        @apply font-display text-2xl font-bold text-ink mb-3;
+    }
+    .prose-lesson h2 {
+        @apply font-display text-xl font-bold text-ink mt-6 mb-2;
+    }
+    .prose-lesson p {
+        @apply mb-4;
+    }
+    .prose-lesson ul {
+        @apply list-disc pl-5 mb-4 space-y-1;
+    }
+    .prose-lesson ol {
+        @apply list-decimal pl-5 mb-4 space-y-1;
+    }
+    .prose-lesson a {
+        @apply text-accent underline underline-offset-2;
+    }
+    .prose-lesson code {
+        @apply rounded bg-surface-2 px-1.5 py-0.5 font-mono text-[13px];
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.fade-up {
+    animation: fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}

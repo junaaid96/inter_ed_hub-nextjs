@@ -1,10 +1,18 @@
+import Link from "next/link";
+
 export default function NotFound() {
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-            <div className="max-w-lg bg-white shadow-md rounded-md p-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-4">404 - Page Not Found!</h1>
-                <p className="text-gray-800">Sorry, the page you are looking for could not be found.</p>
-                <p className="text-gray-800">Please check the URL or go back to the homepage.</p>
+        <div className="mx-auto max-w-xl px-4 py-24 text-center">
+            <p className="font-mono text-sm font-bold text-accent">404</p>
+            <h1 className="mt-2 font-display text-4xl font-bold tracking-tight">This page skipped class.</h1>
+            <p className="mt-3 text-ink-2">The link may be old, or the course was unpublished.</p>
+            <div className="mt-8 flex justify-center gap-3">
+                <Link href="/courses" className="btn btn-primary">
+                    Browse courses
+                </Link>
+                <Link href="/" className="btn btn-outline">
+                    Home
+                </Link>
             </div>
         </div>
     );
