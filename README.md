@@ -46,7 +46,7 @@ npm run dev
 
 | Variable | Description |
 | --- | --- |
-| `NEXT_PUBLIC_API_URL` | Base URL of the Django API, e.g. `https://inter-ed-hub-drf.onrender.com` |
+| `NEXT_PUBLIC_API_URL` | Base URL of the Django API, e.g. `https://inter-ed-hub-drf.vercel.app` |
 
 ## Project layout
 
