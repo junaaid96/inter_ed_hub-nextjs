@@ -87,7 +87,9 @@ export function ActivityHeatmap({ days }) {
                 More
             </div>
             <Tooltip tip={tip} />
-            <table className="sr-only">
+            {/* sr-only on a wrapper: overflow:hidden is ignored on <table>, which leaked blank scroll space. */}
+            <div className="sr-only">
+            <table>
                 <caption>Minutes learned per day, last 12 weeks</caption>
                 <tbody>
                     {days.map((d) => (
@@ -98,6 +100,7 @@ export function ActivityHeatmap({ days }) {
                     ))}
                 </tbody>
             </table>
+            </div>
         </div>
     );
 }
@@ -150,7 +153,9 @@ export function BarChart({ data, valueKey = "count", labelKey = "date", unit = "
                 <span>{fmt(data[data.length - 1][labelKey])}</span>
             </div>
             <Tooltip tip={tip} />
-            <table className="sr-only">
+            {/* sr-only on a wrapper: overflow:hidden is ignored on <table>, which leaked blank scroll space. */}
+            <div className="sr-only">
+            <table>
                 <caption>Total {total}</caption>
                 <tbody>
                     {data.map((d) => (
@@ -161,6 +166,7 @@ export function BarChart({ data, valueKey = "count", labelKey = "date", unit = "
                     ))}
                 </tbody>
             </table>
+            </div>
         </div>
     );
 }
