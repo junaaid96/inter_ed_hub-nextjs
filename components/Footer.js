@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Code } from "@phosphor-icons/react";
 import { Logo } from "./ui";
 
 export default function Footer() {
@@ -27,32 +26,8 @@ export default function Footer() {
                     ]}
                 />
             </div>
-            <div className="border-t border-line">
-                <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 text-xs text-ink-3 sm:px-6 md:flex-row">
-                    <p className="text-center md:text-left">
-                        © {new Date().getFullYear()} InterEd Hub. Built with Django, Next.js and Neon.
-                    </p>
-                    <a
-                        href="https://junaidul.pro.bd/codejborg"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Developed by CodeJBorg — visit developer website"
-                        className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line bg-ink/5 py-1.5 pl-1.5 pr-3 font-mono text-[11px] tracking-wide text-ink-3 transition-colors duration-300 hover:border-ink-3 hover:bg-ink/10 hover:text-ink"
-                    >
-                        <span className="flex size-6 items-center justify-center rounded-full bg-accent text-accent-ink">
-                            <Code size={14} weight="bold" />
-                        </span>
-                        <span>Developed by</span>
-                        <span className="font-semibold text-ink">
-                            <span className="text-accent">&lt;</span>CodeJBorg<span className="text-accent"> /&gt;</span>
-                        </span>
-                        <span aria-hidden="true" className="inline-block h-3.5 w-[2px] bg-accent motion-safe:animate-pulse" />
-                        <ArrowUpRight
-                            size={14}
-                            className="opacity-40 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
-                        />
-                    </a>
-                </div>
+            <div className="border-t border-line py-5 text-center text-xs text-ink-3">
+                © {new Date().getFullYear()} InterEd Hub. Built with Django, Next.js and Neon.
             </div>
         </footer>
     );
