@@ -8,6 +8,12 @@ import { Field, Spinner } from "@/components/ui";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 
+const DEMO_PASSWORD = "learn-together-2026";
+const DEMO_ACCOUNTS = [
+    { login: "demo_teacher", label: "Teacher", icon: "🧑‍🏫" },
+    { login: "demo_student", label: "Student", icon: "🎓" },
+];
+
 export default function LoginPage() {
     return (
         <Suspense>
@@ -25,18 +31,27 @@ function Login() {
     const [busy, setBusy] = useState(false);
     const next = params.get("next");
 
-    const submit = async (e) => {
-        e.preventDefault();
+    const signInWith = async (body) => {
         setBusy(true);
         setError("");
         try {
-            const res = await api("/auth/login/", { method: "POST", body: form, auth: false });
+            const res = await api("/auth/login/", { method: "POST", body, auth: false });
             signIn(res);
             router.replace(next && next.startsWith("/") ? next : "/dashboard");
         } catch (err) {
             setError(err.message);
             setBusy(false);
         }
+    };
+
+    const submit = (e) => {
+        e.preventDefault();
+        signInWith(form);
+    };
+
+    const tryDemo = (login) => {
+        setForm({ login, password: DEMO_PASSWORD });
+        signInWith({ login, password: DEMO_PASSWORD });
     };
 
     return (
@@ -67,6 +82,19 @@ function Login() {
                     {busy ? <Spinner /> : "Log in"}
                 </button>
             </form>
+            <div className="mt-6 rounded-2xl border border-dashed border-line p-4">
+                <p className="text-sm font-semibold">🧪 Explore the demo</p>
+                <p className="mt-1 text-xs text-ink-2">
+                    One click signs you in. Password for every demo account: <code className="font-mono">{DEMO_PASSWORD}</code>
+                </p>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                    {DEMO_ACCOUNTS.map((d) => (
+                        <button key={d.login} type="button" className="btn btn-outline btn-sm w-full" disabled={busy} onClick={() => tryDemo(d.login)}>
+                            <span aria-hidden="true">{d.icon}</span> {d.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
             <p className="mt-6 text-center text-sm text-ink-2">
                 New here?{" "}
                 <Link href={`/register${next ? `?next=${encodeURIComponent(next)}` : ""}`} className="font-semibold text-accent hover:underline">
