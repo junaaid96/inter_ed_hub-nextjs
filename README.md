@@ -28,7 +28,7 @@ video uploads to Neon Object Storage.
 - Dashboard: learners, rating, minutes watched, 30-day enrollment chart, question inbox,
   per-course completion rates
 
-**Everywhere**: light and dark theme, responsive down to phones, accessible labels,
+**Everywhere**: responsive down to phones, accessible labels,
 focus states and reduced-motion support.
 
 ## Stack
